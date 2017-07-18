@@ -113,5 +113,6 @@ if __name__ == '__main__':
             airportKeywordList.append([keywords, code, name])
             featureMap[''.join(arr)] = code
     #app.run(host='23.105.198.140',port=5001)
-    app.run(host='10.172.211.107',port=5001)
+    #app.run(host='10.172.211.107',port=5001)
+    app.run()
 
