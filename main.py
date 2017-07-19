@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.abspath('../flaskPackages/'))
 from flask import Flask, request, Response
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+airportMap = {}
 featureMap = {}
 sep = '\s|-|\.|"|\'|\(|\)|/|,|&|airport'
 
@@ -15,6 +16,10 @@ def getAirportCode():
         fuzzy = request.args['fuzzy']
         name = request.args['name'].lower()
         if fuzzy == '0':
+            if name in airportMap:
+                jsonMap['data']['name'] = name
+                jsonMap['data']['code'] = airportMap[name]
+        elif fuzzy == '2':
             arr = re.split(sep, name)
             feature = ''.join(arr)
             if feature in featureMap:
@@ -43,6 +48,7 @@ def initApp():
         for row in jsonMap['list']:
             name = row['name'].lower()
             code = row['code'].upper()
+            airportMap[name] = code
             arr = re.split(sep,name)
             featureMap[''.join(arr)] = (name,code)
 
