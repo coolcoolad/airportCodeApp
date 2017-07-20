@@ -1,11 +1,59 @@
 import json, re
 from datetime import date, timedelta
+from bs4 import BeautifulSoup
 
-delta = timedelta(days=5)
-future = date.today()+delta
-print future.isoformat()
+# with open('test2.txt', 'r') as fd:
+#     jj = json.load(fd, encoding='utf-8')
+#     print len(jj['cc'].encode('utf-8'))
+#     print len(jj['dd'])
 
-print future < date.today()
+# with open('test.txt','r') as fd:
+#     aa = fd.readline()
+#     # soup = BeautifulSoup(aa, 'html.parser', from_encoding='utf-8')
+#     # aa = soup.get_text()
+#
+#     print len(aa)
+#     print aa
+#     bb = aa.decode('utf-8')
+#     print len(bb)
+#     print bb
+#
+#     jsonMap = {aa:aa}
+#     with open('test1.txt','w') as fd:
+#         json.dump(jsonMap, fd, encoding='utf-8', ensure_ascii=True)
+
+
+with open('airport_code.json') as fd:
+    jsonMap = json.load(fd, encoding='utf-8')
+    nameMap = {}
+    codeMap = {}
+
+    for row in jsonMap['list']:
+        name = row['name'].lower()
+        code = row['code'].upper()
+        if name in nameMap:
+            nameMap[name].append(code)
+        else:
+            nameMap[name] = [code]
+        if code in codeMap:
+            codeMap[code].append(name)
+        else:
+            codeMap[code] = [name]
+
+    print 'name'
+    for key, val in nameMap.items():
+        if len(val) > 1:
+            print (key, val)
+    print 'iata'
+    for key, val in codeMap.items():
+        if len(val) > 1:
+            print (key, val)
+
+# delta = timedelta(days=5)
+# future = date.today()+delta
+# print future.isoformat()
+#
+# print future < date.today()
 
 # aa = 'ee'
 # print aa[1:5]

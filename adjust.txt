@@ -1,0 +1,12 @@
+(u'barra airport', [u'BQQ', u'BRR']) BRR
+(u'lake county airport', [u'LKV', u'LXV']) non
+(u'marion municipal airport', [u'MNN', u'MZZ']) non
+(u'bali airport', [u'BAJ', u'BLC']) non
+(u'hamilton airport', [u'HLT', u'HLZ']) HLZ
+(u'san rafael airport', [u'AFA', u'LOB']) AFA
+(u'metropolitan area1', [u'DTT[1]', u'MIL[1]']) non
+(u'metropolitan area3', [u'BHZ[1]', u'LON[2]', u'MOW[1]']) non
+(u'metropolitan area2', [u'BAK[1]', u'CHI[1]', u'EAP[1]', u'IZM[1]', u'JKT[1]', u'MMA[1]']) non
+(u'lawrence municipal airport', [u'LWC', u'LWM'])  non
+(u'mount pleasant municipal airport', [u'MOP', u'MPZ']) non
+(u'monroe county airport', [u'BMG', u'MVC']) non

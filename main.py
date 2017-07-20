@@ -19,21 +19,21 @@ def getAirportCode():
         name = request.args['name'].lower()
         if fuzzy == '0':
             if name in airportMap:
-                jsonMap['data']['name'] = name
-                jsonMap['data']['code'] = airportMap[name]
+                jsonMap['data']['name'] = name.encode('utf-8')
+                jsonMap['data']['code'] = airportMap[name].encode('utf-8')
         elif fuzzy == '2':
             arr = re.split(sep, name)
             feature = ''.join(arr)
             if feature in featureMap:
-                jsonMap['data']['name'] = featureMap[feature][0]
-                jsonMap['data']['code'] = featureMap[feature][1]
+                jsonMap['data']['name'] = featureMap[feature][0].encode('utf-8')
+                jsonMap['data']['code'] = featureMap[feature][1].encode('utf-8')
         else:
             raise Exception("fuzzy is wrong")
     except Exception, ex:
         app.logger.info(ex.message)
         jsonMap['status'] = 1
         jsonMap['message'] = ex.message
-    resp = Response(json.dumps(jsonMap, encoding='utf-8'))
+    resp = Response(json.dumps(jsonMap, encoding='utf-8', ensure_ascii=False))
     resp.headers['Content-Type'] = 'application/json'
     return resp
 
@@ -51,11 +51,11 @@ def initApp():
     app.logger.level = logging.INFO
     app.logger.addHandler(logHandler)
 
-    with open('airport_code.json') as fd:
+    with open('airport_code_.json') as fd:
         jsonMap = json.load(fd, encoding='utf-8')
         for row in jsonMap['list']:
             name = row['name'].lower()
-            code = row['code'].upper()
+            code = row['iata'].upper()
             airportMap[name] = code
             arr = re.split(sep,name)
             featureMap[''.join(arr)] = (name,code)
