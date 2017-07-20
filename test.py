@@ -23,14 +23,14 @@ from bs4 import BeautifulSoup
 #         json.dump(jsonMap, fd, encoding='utf-8', ensure_ascii=True)
 
 
-with open('airport_code.json') as fd:
+with open('airport_code_.json') as fd:
     jsonMap = json.load(fd, encoding='utf-8')
     nameMap = {}
     codeMap = {}
 
     for row in jsonMap['list']:
         name = row['name'].lower()
-        code = row['code'].upper()
+        code = row['iata'].upper()
         if name in nameMap:
             nameMap[name].append(code)
         else:
@@ -68,8 +68,9 @@ with open('airport_code.json') as fd:
 # if ord(num_str[0]) < ord('0') and ord(num_str[0]) > ord('9'):
 #     dd = 1
 
-# keywords = filter(lambda x:x != '', re.split('\s|-|\.|"|\'|\(|\)|/|,|&|international|airport','..a b-c.d"5\'6(7)8/1,2&3internationalddairportcc'))
+# keywords = filter(lambda x:x != '', re.split('\s|-|\.|"|\'|\(|\)|/|,|&|airport','..a b--c.d"5\'6(7)8/1,2&3internationalddairportccSeattleTacoma International Airport'))
 # print keywords
+
 
 # with open('airport_code.json') as fd:
 #     jsonMap = json.load(fd, encoding='utf-8')

@@ -11,6 +11,13 @@ airportMap = {}
 featureMap = {}
 sep = '\s|-|\.|"|\'|\(|\)|/|,|&|airport'
 
+def getFeature(name):
+    ans = ''
+    for ch in name:
+        if ch >= 'a' and ch <= 'z':
+            ans += ch
+    return ans.replace('airport', '')
+
 @app.route('/getAirportCode')
 def getAirportCode():
     jsonMap = {'status':0, 'message':'', 'data':{'name':'null', 'code':'null'}}
@@ -22,8 +29,7 @@ def getAirportCode():
                 jsonMap['data']['name'] = name.encode('utf-8')
                 jsonMap['data']['code'] = airportMap[name].encode('utf-8')
         elif fuzzy == '2':
-            arr = re.split(sep, name)
-            feature = ''.join(arr)
+            feature = getFeature(name)
             if feature in featureMap:
                 jsonMap['data']['name'] = featureMap[feature][0].encode('utf-8')
                 jsonMap['data']['code'] = featureMap[feature][1].encode('utf-8')
@@ -32,7 +38,7 @@ def getAirportCode():
     except Exception, ex:
         app.logger.info(ex.message)
         jsonMap['status'] = 1
-        jsonMap['message'] = ex.message
+        jsonMap['message'] = ex.message.encode('utf-8')
     resp = Response(json.dumps(jsonMap, encoding='utf-8', ensure_ascii=False))
     resp.headers['Content-Type'] = 'application/json'
     return resp
@@ -57,8 +63,7 @@ def initApp():
             name = row['name'].lower()
             code = row['iata'].upper()
             airportMap[name] = code
-            arr = re.split(sep,name)
-            featureMap[''.join(arr)] = (name,code)
+            featureMap[getFeature(name)] = (name,code)
 
 initApp()
 

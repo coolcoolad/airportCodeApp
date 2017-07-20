@@ -19,17 +19,27 @@ def main():
         trArr = soup.find('table').find_all('tr')
         for tr in trArr:
             tdArr = tr.find_all('td')
-            if len(tdArr) != 6:
+            if len(tdArr) < 3:
                 continue
             map_ = {}
             map_['iata'] = tdArr[0].get_text().encode('utf-8')
             map_['icao'] = tdArr[1].get_text().encode('utf-8')
             map_['name'] = tdArr[2].get_text().encode('utf-8')
-            if tdArr[4].a is not None:
-                map_['timezone'] = tdArr[4].a.get_text().encode('utf-8')
-            else:
-                map_['timezone'] = tdArr[4].get_text().encode('utf-8')
-            map_['dst'] = tdArr[5].get_text().encode('utf-8')
+            map_['location'] = ''
+            map_['timezone'] = ''
+            map_['dst'] = ''
+            if len(tdArr) > 3:
+                if tdArr[3].a is not None:
+                    map_['location'] = tdArr[3].a.get_text().encode('utf-8')
+                else:
+                    map_['location'] = tdArr[3].get_text().encode('utf-8')
+            if len(tdArr) > 4:
+                if tdArr[4].a is not None:
+                    map_['timezone'] = tdArr[4].a.get_text().encode('utf-8')
+                else:
+                    map_['timezone'] = tdArr[4].get_text().encode('utf-8')
+            if len(tdArr) > 5:
+                map_['dst'] = tdArr[5].get_text().encode('utf-8')
             jsonMap['list'].append(map_)
         print i
     with open(fileName,'w') as fd:
