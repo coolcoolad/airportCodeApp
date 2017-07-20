@@ -39,7 +39,7 @@ def getAirportCode():
         app.logger.info(ex.message)
         jsonMap['status'] = 1
         jsonMap['message'] = ex.message.encode('utf-8')
-    resp = Response(json.dumps(jsonMap, encoding='utf-8', ensure_ascii=False))
+    resp = Response(json.dumps(jsonMap, encoding='utf-8'))
     resp.headers['Content-Type'] = 'application/json'
     return resp
 
